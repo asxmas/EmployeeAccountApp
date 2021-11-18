@@ -1,14 +1,15 @@
-package empaccapp.employees;
+package empaccapp.employees.impl;
 
 import empaccapp.employees.enums.Position;
 import empaccapp.employees.enums.Rate;
 
+import java.util.Random;
+
 public class Operator extends EmployeeImpl {
 
-    int salary;
     public Operator(){
         setPosition(Position.OPERATOR);
-        setSalary(Rate.OPERATOR_FIX_SALARY.getValue() + (int)(Rate.OPERATOR_FIX_SALARY_FORK.getValue() * Math.random()));
+        setSalary(Rate.OPERATOR_FIX_SALARY.getValue() + new Random().nextInt(Rate.OPERATOR_FIX_SALARY_FORK.getValue()));
     }
 
     @Override

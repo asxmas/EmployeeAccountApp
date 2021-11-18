@@ -3,6 +3,8 @@ package empaccapp.employees.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Random;
+
 @AllArgsConstructor
 @Getter
 public enum LastName {
@@ -30,6 +32,6 @@ public enum LastName {
     private final String name;
 
     public static String getRandomName(){
-        return values()[(int)(Math.random() * values().length)].getName();
+        return values()[new Random().nextInt(values().length)].getName();
     }
 }

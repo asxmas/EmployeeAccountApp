@@ -1,71 +1,75 @@
 package empaccapp.organization;
 
 import empaccapp.employees.Employee;
-import empaccapp.employees.EmployeeImpl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
 public class Organization {
 
     private int employeeId = 0;
-    private Set<EmployeeImpl> employees = new HashSet<>();
+    private final Set<Employee> employees = new HashSet<>();
 
-    public void hire(EmployeeImpl employee){
+    public void hire(Employee employee){
 
         employeeId++;
+        employee.setId(employeeId);
         employee.setOrganization(this);
         employees.add(employee);
     }
 
-    public void hireAll(List<EmployeeImpl> employeeList){
+    public void hireAll(List<Employee> employeeList){
         employeeList.forEach(this::hire);
     }
 
-    public void dismissal(EmployeeImpl employee){
+    public void dismissal(Employee employee){
         if(employees.isEmpty()){
-            System.out.println("The organization has no employees");
+            throw new IllegalArgumentException("The organization has no employees");
         }
         if(!employees.contains(employee)){
-            System.out.println("This employee is not on the staff");
+            throw new IllegalArgumentException("This employee is not on the staff");
         }
         employees.remove(employee);
     }
 
     public int getIncome(){
-        return employees.stream().filter(e -> e.getSales() > 0).mapToInt(EmployeeImpl::getSales).sum();
+        return employees.stream().filter(e -> e.getSales() > 0).mapToInt(Employee::getSales).sum();
     }
 
-    private List<EmployeeImpl> sortEmployeesBySalary(){
+    public List<Employee> sortEmployeesBySalary(){
         return employees.stream()
-                .sorted(Comparator.comparing(EmployeeImpl::getSalary))
-                .collect(Collectors.toList());
+                .sorted(Comparator.comparing(Employee::getSalary))
+                .toList();
     }
-    public List<EmployeeImpl> getLowestSalaryEmployees(int numOfEmployees){
+    public List<Employee> getLowestSalaryEmployees(int numOfEmployees){
         if(numOfEmployees < 0){
             throw new IllegalArgumentException("numOfEmployees must be greater than 0");
         }
         else {
-            return sortEmployeesBySalary().stream().limit(numOfEmployees).collect(Collectors.toList());
+            return sortEmployeesBySalary().stream().limit(numOfEmployees).toList();
         }
     }
 
-    public List<EmployeeImpl> getTopSalaryEmployees(int numOfEmployees){
-        if(numOfEmployees < 0){
+    public List<Employee> getTopSalaryEmployees(int numOfEmployees){
+        if(numOfEmployees <= 0){
             throw new IllegalArgumentException("numOfEmployees must be greater than 0");
         }
         else {
-            List<EmployeeImpl> list = sortEmployeesBySalary();
-            Collections.reverse(list);
-            return list.stream().limit(numOfEmployees).collect(Collectors.toList());
+            if(numOfEmployees > employees.size()){
+                numOfEmployees = employees.size();
+            }
+            ArrayList<Employee> topSalary = new ArrayList<>();
+            for(int i = employees.size() - 1; i > employees.size() - numOfEmployees - 1; i--){
+                topSalary.add(sortEmployeesBySalary().get(i));
+            }
+            return topSalary;
         }
     }
 
-    public void printEmployeeList(List<EmployeeImpl> listOfEmployees){
+    public void printEmployeeList(List<Employee> listOfEmployees){
         listOfEmployees.forEach(e -> System.out.println(e.getFirstName()
                 + " "
                 + e.getLastName()

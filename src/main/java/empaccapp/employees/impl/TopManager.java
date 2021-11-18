@@ -1,13 +1,15 @@
-package empaccapp.employees;
+package empaccapp.employees.impl;
 
 import empaccapp.employees.enums.Position;
 import empaccapp.employees.enums.Rate;
 
+import java.util.Random;
+
 public class TopManager extends EmployeeImpl {
 
     public TopManager(){
-        setPosition(Position.MANAGER);
-        setSalary(Rate.TOP_MANAGER_FIX_SALARY.getValue() + (int)(Rate.TOP_MANAGER_FIX_SALARY_FORK.getValue() * Math.random()));
+        setPosition(Position.TOPMANAGER);
+        setSalary(Rate.TOP_MANAGER_FIX_SALARY.getValue() + new Random().nextInt(Rate.TOP_MANAGER_FIX_SALARY_FORK.getValue()));
     }
 
     @Override

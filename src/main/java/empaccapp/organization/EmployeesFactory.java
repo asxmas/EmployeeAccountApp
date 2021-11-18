@@ -1,17 +1,18 @@
 package empaccapp.organization;
 
-import empaccapp.employees.EmployeeImpl;
-import empaccapp.employees.Manager;
-import empaccapp.employees.Operator;
-import empaccapp.employees.TopManager;
+import empaccapp.employees.*;
 import empaccapp.employees.enums.Position;
+import empaccapp.employees.impl.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeesFactory {
 
-    public static EmployeeImpl createEmployee(Position position){
+    private EmployeesFactory(){
+        throw new IllegalStateException("Utility class");
+    }
+    public static Employee createEmployee(Position position){
 
         return
         switch (position){
@@ -21,8 +22,8 @@ public class EmployeesFactory {
         };
     }
 
-    public static List<EmployeeImpl> createEmployeeList(Position position, int employeeNums){
-        List<EmployeeImpl> listOfEmployees = new ArrayList<>();
+    public static List<Employee> createEmployeeList(Position position, int employeeNums){
+        List<Employee> listOfEmployees = new ArrayList<>();
         for(int i = 0; i < employeeNums; i++){
             listOfEmployees.add(createEmployee(position));
         }

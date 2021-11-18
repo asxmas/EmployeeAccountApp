@@ -13,9 +13,9 @@ public enum Rate {
     OPERATOR_FIX_SALARY_FORK(20000),
     ORGANIZATION_INCOME_PROFIT_FOR_BONUS(10000000);
 
-    private int value;
+    private final int value;
 
-    private Rate(int value){
+    Rate(int value){
         this.value = value;
     }
 

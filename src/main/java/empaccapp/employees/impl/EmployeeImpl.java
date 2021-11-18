@@ -1,5 +1,6 @@
-package empaccapp.employees;
+package empaccapp.employees.impl;
 
+import empaccapp.employees.Employee;
 import empaccapp.employees.enums.*;
 import empaccapp.organization.Organization;
 import lombok.Getter;

@@ -2,7 +2,8 @@ package empaccapp.employees.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+
+import java.util.Random;
 
 @AllArgsConstructor
 @Getter
@@ -31,6 +32,6 @@ public enum FemaleName {
     private final String name;
 
     public static String getRandomName(){
-        return values()[(int)(Math.random() * values().length)].getName();
+        return values()[new Random().nextInt(values().length)].getName();
     }
 }
